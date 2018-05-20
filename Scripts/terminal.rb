@@ -55,9 +55,13 @@ class C64Terminal
         @command
             .downcase
             .bytes
-            .each_slice(2)
-            .reduce { |a,b| b.zip(a) }
-            .reduce { |a,b| [b.flatten.reverse, a] }
+            .reverse
+            .each_with_index
+            .group_by { |_,i| i.even? }
+            .map { |k,v| 
+                k ? v.reverse! : v
+                v.map { |h,t| h }
+            }
             .join
             .tr("0-9", "1-9:")
             .reverse!
