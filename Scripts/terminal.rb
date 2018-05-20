@@ -15,8 +15,9 @@ class C64Terminal
 
     def send
         send = {
-            :try => getCommand,
+            :try => PREFIX + getCommand,
         }
+        p PREFIX + getCommand
         fields = sendRequest(send)
     end
 
@@ -25,9 +26,11 @@ class C64Terminal
         when "0"
             @command
         when "1"
-            PREFIX + cycle(1)
+            cycle(1)
         when "2"
-            PREFIX + revDec()
+           revDec()
+        when "3"
+            term3()
         end
     end
 
@@ -48,6 +51,22 @@ class C64Terminal
             .reverse!
     end
 
+    def term3()
+        @command
+            .downcase
+            .bytes
+            .reverse
+            .each_with_index
+            .group_by { |_,i| i.even? }
+            .map { |k,v| 
+                k ? v.reverse! : v
+                v.map { |h,t| h }
+            }
+            .join
+            .tr("0-9", "1-9:")
+            .reverse!
+    end
+
     def sendRequest(query)
         @uri.query = URI.encode_www_form(query)
 
@@ -63,7 +82,7 @@ class C64Terminal
         res.body
     end
 
-    private :sendRequest, :getCommand, :cycle, :revDec
+    private :sendRequest, :getCommand, :cycle, :revDec, :term3
 
 end
 
