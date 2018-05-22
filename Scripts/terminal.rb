@@ -31,6 +31,8 @@ class C64Terminal
            revDec()
         when "3"
             term3()
+        when "4"
+            term4()
         end
     end
 
@@ -62,6 +64,24 @@ class C64Terminal
                 k ? v.reverse! : v
                 v.map { |h,t| h }
             }
+            .join
+            .tr("0-9", "1-9:")
+            .reverse!
+    end
+
+    def term4()
+        @command
+            .downcase
+            .bytes
+            .values_at(
+                *(
+                    [*@command.length/2...@command.length]
+                    .reverse
+                    .zip([*0...@command.length/2])
+                )
+                .flatten
+                .compact
+            )
             .join
             .tr("0-9", "1-9:")
             .reverse!
