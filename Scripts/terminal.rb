@@ -33,6 +33,8 @@ class C64Terminal
             term3()
         when "4"
             term4()
+        when "5"
+            term5()
         end
     end
 
@@ -85,6 +87,13 @@ class C64Terminal
             .join
             .tr("0-9", "1-9:")
             .reverse!
+    end
+
+    def term5() 
+        @command = @command
+            .downcase
+            .tr("a-z","abcdefghijklmnopqrstuvwxyz".reverse)
+        term4()
     end
 
     def sendRequest(query)
