@@ -93,6 +93,7 @@ class C64Terminal
         @command = @command
             .downcase
             .tr("a-z","abcdefghijklmnopqrstuvwxyz".reverse)
+            .tr(" .", "\xBB\xAD".force_encoding("ASCII-8BIT"))
         term4()
     end
 
