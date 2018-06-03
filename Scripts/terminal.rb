@@ -1,8 +1,8 @@
 require 'net/http'
 
 class C64Terminal
-    REFERER = "http://mjizmja2mjaymju1mzc5ntc3.space/cgi-bin/load-html.py?section=b64&token=57544e6161475244516d6c5a4d6d7870576c686f4d6d4e525054303d"
-    URL = "http://mjizmja2mjaymju1mzc5ntc3.space/cgi-bin/b64.py"
+    REFERER = "http://mjizmja2mjaymju1mzc5ntc3.space/qqq/ORGANICRUN.b64.html"
+    URL = "http://mjizmja2mjaymju1mzc5ntc3.space/cgi-bin/ladsljdfsjkladf_clean_b64.py"
     PREFIX =  "65574a786232566965413d3d."
 
     private_constant :REFERER, :URL, :PREFIX
@@ -24,17 +24,17 @@ class C64Terminal
     def getCommand
         case @type
         when "0"
-            PREFIX + @command
+            @command
         when "1"
-            PREFIX + cycle(1)
+            cycle(1)
         when "2"
-            PREFIX + revDec()
+            revDec()
         when "3"
-            PREFIX + term3()
+            term3()
         when "4"
-            PREFIX + term4()
+            term4()
         when "5"
-            PREFIX + term5()
+            term5()
         when "6"
             term6()
         end
