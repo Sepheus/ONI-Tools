@@ -15,26 +15,28 @@ class C64Terminal
 
     def send
         send = {
-            :try => PREFIX + getCommand,
+            :try => getCommand,
         }
-        p PREFIX + getCommand
+        p send
         fields = sendRequest(send)
     end
 
     def getCommand
         case @type
         when "0"
-            @command
+            PREFIX + @command
         when "1"
-            cycle(1)
+            PREFIX + cycle(1)
         when "2"
-           revDec()
+            PREFIX + revDec()
         when "3"
-            term3()
+            PREFIX + term3()
         when "4"
-            term4()
+            PREFIX + term4()
         when "5"
-            term5()
+            PREFIX + term5()
+        when "6"
+            term6()
         end
     end
 
@@ -95,6 +97,10 @@ class C64Terminal
             .tr("a-z","abcdefghijklmnopqrstuvwxyz".reverse)
             .tr(" .", "\xBB\xAD".force_encoding("ASCII-8BIT"))
         term4()
+    end
+
+    def term6()
+        @command = "OVERFLOW_OFF[print {push 0x93f203ee90a0-0x93fff0000001,0xce2551,1,0,0,1}]"
     end
 
     def sendRequest(query)
